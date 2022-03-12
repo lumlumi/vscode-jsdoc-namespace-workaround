@@ -7,16 +7,19 @@ var enabled = false;
 
 
 export function activate(context: vscode.ExtensionContext) {
+	const settingsEnabled = vscode.workspace.getConfiguration("vscode-jsdoc-namespace-workaround").get("activated");
+	vscode.window.showInformationMessage(String(settingsEnabled));
+	if(settingsEnabled) {
+		enable(context);
+	}
 	vscode.commands.registerCommand("vscode-jsdoc-namespace-workaround.enable", () =>  {
 		if(!enabled) {
 			enable(context);
-			enabled = true;
 		}
 	});
 	vscode.commands.registerCommand("vscode-jsdoc-namespace-workaround.disable", () =>  {
 		if(enabled) {
 			disable();
-			enabled = false;
 		}
 	});
 }
@@ -28,6 +31,8 @@ export function deactivate() {
 
 function enable(context: vscode.ExtensionContext) {
 	namespaceHandler = new NamespaceHandler();
+	enabled = true;
+	vscode.workspace.getConfiguration("vscode-jsdoc-namespace-workaround").update("activated", true);
 	try {
 		watcher = vscode.workspace.createFileSystemWatcher("**/*.js");
 		vscode.workspace.onDidChangeWorkspaceFolders(event => {
@@ -45,6 +50,8 @@ function enable(context: vscode.ExtensionContext) {
 
 
 function disable() {
+	enabled = false;
 	namespaceHandler = null;
 	watcher?.dispose();
+	vscode.workspace.getConfiguration("vscode-jsdoc-namespace-workaround").update("activated", false);
 }

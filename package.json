@@ -17,10 +17,20 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-jsdoc-namespace-workaround.enable"
+		"workspaceContains:**/*.js"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
+		"configuration": {
+			"title": "JSDoc-namespace",
+			"properties": {
+			  "vscode-jsdoc-namespace-workaround.activated": {
+				"type": "boolean",
+				"default": false,
+				"description": "JSDoc namespace workaround is activated"
+			  }
+			}
+		  },
 		"commands": [
 			{
 				"command": "vscode-jsdoc-namespace-workaround.enable",
