@@ -1,6 +1,6 @@
 {
 	"name": "vscode-jsdoc-namespace-workaround",
-	"displayName": "vscode-jsdoc-namespace-workaround",
+	"displayName": "JSDoc namespace workaround",
 	"description": "Workaround to support jsdoc namespace autocompletion in VS Code",
 	"version": "0.0.1",
 	"author": "Romain Bosquet",
@@ -17,12 +17,20 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onLanguage:javascript",
-		"onLanguage:typescript"
+		"onCommand:vscode-jsdoc-namespace-workaround.enable"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
-		"commands": []
+		"commands": [
+			{
+				"command": "vscode-jsdoc-namespace-workaround.enable",
+				"title": "Enable jsdoc namespace generation"
+			},
+			{
+				"command": "vscode-jsdoc-namespace-workaround.disable",
+				"title": "Disable jsdoc namespace generation"
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run package",

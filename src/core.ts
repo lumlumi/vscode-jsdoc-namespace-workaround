@@ -15,10 +15,12 @@ export class NamespaceHandler {
     }
 
 
-	processChange(fileChanged: Uri) {
-        const workspace = find(this.configurations.values(), fileChanged.path);
-        workspace?.removeFile(fileChanged.path);
-        workspace?.parseFile(fileChanged.path);
+	processChange(fileChangedPath: string) {
+        const workspace = find(this.configurations.values(), fileChangedPath);
+        workspace?.removeFile(fileChangedPath);
+        if(fs.existsSync(fileChangedPath)) {
+            workspace?.parseFile(fileChangedPath);
+        }
         workspace?.render();
 	}
 
